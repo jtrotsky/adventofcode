@@ -15,22 +15,25 @@ func main() {
 		panic(err)
 	}
 
-	// Break the data into cleam lines
+	// Break the data into clean lines
 	lines := strings.Split(string(file), "\n")
 	depths := make([]int, 0, len(lines))
 
 	// Range over lines and extract ints
 	var larger int
 	for _, line := range lines {
+		// Skip EOF line
 		if len(line) == 0 {
 			continue
 		}
-
+		
+		// Convert string to int, remove newline
 		number, err := strconv.Atoi(strings.TrimSpace(line))
 		if err != nil {
 			panic(err)
 		}
-
+		
+		// Compare depth to previous 
 		if len(depths) > 0 && depths[len(depths)-1] < number {
 			larger++
 		}

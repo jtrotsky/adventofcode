@@ -20,26 +20,48 @@ func main() {
 	depths := make([]int, 0, len(lines))
 
 	// Range over lines and extract ints
-	var larger int
+	var largerThanPrev, largerSum, total int
 	for _, line := range lines {
-		// Skip EOF line
+		// Skip empty lines
 		if len(line) == 0 {
 			continue
 		}
-		
+
 		// Convert string to int, remove newline
 		number, err := strconv.Atoi(strings.TrimSpace(line))
 		if err != nil {
 			panic(err)
 		}
-		
-		// Compare depth to previous 
+
+		// Compare depth to previous
 		if len(depths) > 0 && depths[len(depths)-1] < number {
-			larger++
+			largerThanPrev++
 		}
 
 		depths = append(depths, number)
+
+		// Skip the first 3
+		if len(depths) < 3 {
+			continue
+		}
+
+		if total > 0 && total < sum(depths[len(depths)-3:len(depths)-0]) {
+			// fmt.Printf("LARGER: (%d, %d, %d) %d > %d\n", depths[len(depths)-3], depths[len(depths)-2], depths[len(depths)-1], sum(depths[len(depths)-3:len(depths)-0]), total)
+			largerSum++
+		} else {
+			// fmt.Printf("SMALLER: (%d, %d, %d) %d < %d\n", depths[len(depths)-3], depths[len(depths)-2], depths[len(depths)-1], sum(depths[len(depths)-3:len(depths)-0]), total)
+		}
+
+		total = sum(depths[len(depths)-3 : len(depths)-0])
 	}
 
-	fmt.Println(larger)
+	fmt.Printf("Larger than previous: %d\nLarger than sum: %d", largerThanPrev, largerSum)
+}
+
+func sum(slice []int) int {
+	total := 0
+	for _, i := range slice {
+		total += i
+	}
+	return total
 }

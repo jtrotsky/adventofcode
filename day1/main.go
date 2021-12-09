@@ -15,7 +15,7 @@ func main() {
 		panic(err)
 	}
 
-	// Break the data into cleam lines
+	// Break the data into clean lines
 	lines := strings.Split(string(file), "\n")
 	depths := make([]int, 0, len(lines))
 

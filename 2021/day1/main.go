@@ -10,7 +10,7 @@ import (
 func main() {
 	// First get all the depths from
 	// https://adventofcode.com/2021/day/1/input
-	file, err := os.ReadFile("depths.txt")
+	file, err := os.ReadFile("input.txt")
 	if err != nil {
 		panic(err)
 	}
